@@ -1,0 +1,55 @@
+<app-cabecera-salidas></app-cabecera-salidas>
+
+<div class="centrar">
+    <div id="historial">
+        <table [className]="'tabla-paginator'" mat-table [dataSource]="dataSource">
+            <caption>SALIDAS PENDIENTES DE PREPARAR</caption>
+            <ng-container matColumnDef="destino">
+                <th class="header-paginator" *matHeaderCellDef>DESTINO</th>
+                <td class="fila-paginator" mat-cell *matCellDef="let salida">
+                    {{salida.destino || salida.colaborador || salida.pdv}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preparado">
+                <th class="header-paginator" *matHeaderCellDef>PREPARADO</th>
+                <td class="fila-paginator" mat-cell *matCellDef="let salida">
+                    <div class="flotar-medio">
+                        <div>
+                            <img [ngClass]="{'no-relleno': !salida.rellena}"
+                                src="../../../assets/icons/check-verde.svg" />
+                            <img [ngClass]="{'relleno': salida.rellena}"
+                                src="../../../assets/icons/no-check-gris.svg" />
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th class="header-paginator" *matHeaderCellDef>ACCIONES</th>
+                <td class="fila-paginator" mat-cell *matCellDef="let salida">
+                    <div class="btns-acciones">
+                        <app-detalles-salidas [enRecibidas]="false" [salida]="salida"
+                            (salidaRellena)="handleRellena(salida, $event)">
+                        </app-detalles-salidas>
+
+                        <button [appConfirm]="'¿ESTÁS SEGURO DE BORRAR LA SALIDA?'"
+                            (confirmed)="deleteSalida(salida.id!)" *appHasRole="'ROLE_ADMIN'"
+                            [disabled]="!btnSubmitActivado" class="btn-eliminar">
+                            <span class="text">BORRAR</span>
+                            <span class="icon">
+                                <img src="../../../assets/icons/delete-bin.svg" />
+                            </span>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnasPaginator"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasPaginator;"></tr>
+        </table>
+        <mat-paginator class="paginator" [pageSize]="pageSize" [pageIndex]="pageIndex" [length]="totalElementos"
+            [hidePageSize]="true" showFirstLastButtons (page)="cambiarPagina($event)">
+        </mat-paginator>
+    </div>
+</div>

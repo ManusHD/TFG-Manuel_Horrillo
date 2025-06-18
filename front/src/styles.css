@@ -1,0 +1,819 @@
+:root {
+    --main-color: #01081f;
+    --bg-color: #05123c;
+    --letter-color: #3d7eff;
+    --letter-color-off: #5e6a81;
+    --aux-color: #014257;
+    --caption-color: #007253;
+    --thead-color: #000;
+    --thead-bgcolor: #B4C2E1;
+    --table-primary: #1242DF;
+    --table-secondary: #3E66DF;
+    --btn-inactive: #9f9f9f;
+    --w-paginator: 400px;
+    --btn-color-w: #fff;
+    --btn-color-b: #000;
+    --table-color: #fff;
+    --checked-color: #00b712;
+    --color-detalles: #EBB934;
+    --color-excel-hover: #307750;
+    --color-excel: #469b61;
+    --error-color: #e74c3c;
+    --active-color: #1242DF;
+    --hover-color: rgba(61, 126, 255, 0.1);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    --success-color: #4caf50;
+    --transition-speed: 0.3s;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --positive-color: #00b712;
+    --negative-color: #ff4d4d;
+    --warning-color: #ffc107;
+    --danger-color: #ff4d4d;
+    --form-bg: #01081fb3;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-cream: #f6f5f3;
+    --color-beige: #e8e6e1;
+    --color-gold: #d4af37;
+    --font-primary: 'Montserrat', sans-serif;
+    --spacing-unit: 8px;
+    --border-radius: 2px;
+    --transition: all 0.3s ease;
+}
+
+@font-face {
+    font-family: 'Nunito-SemiBold';
+    src: url('./assets/fuentes/Nunito-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'Nunito-Medium';
+    src: url('./assets/fuentes/Nunito-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Nunito-Bold';
+    src: url('./assets/fuentes/Nunito-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Nunito-ExtraBold';
+    src: url('./assets/fuentes/Nunito-ExtraBold.ttf');
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito-SemiBold';
+    background-color: var(--bg-color);
+    color: var(--letter-color-off);
+}
+
+.mat-mdc-snack-bar-container {
+    position: fixed !important;
+    z-index: 200;
+    justify-content: right !important;
+}
+
+.exito .mdc-snackbar__surface {
+    background-color: var(--checked-color) !important;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.error .mdc-snackbar__surface {
+    background-color: #de0000 !important;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.campo-vacio {
+    border-bottom: 2px solid red !important;
+    background-color: red !important;
+}
+
+.flotar-medio {
+    justify-content: center;
+    align-items: center;
+}
+
+.transparente {
+    background-color: transparent;
+}
+
+.btn-productos,
+.btn-grabar {
+    border: none;
+    padding: 3.5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Nunito-Medium';
+}
+
+.btn-productos {
+    background-color: var(--color-detalles);
+}
+
+.btn-productos:hover {
+    background-color: #ffd875;
+}
+
+.btn-grabar {
+    background-color: #00f210;
+    font-weight: 590;
+}
+
+.btn-grabar:hover {
+    background-color: #009d00;
+}
+
+/* Personalización de scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--letter-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--table-primary);
+}
+
+app-importar-excel {
+    margin: 20px;
+}
+
+app-exportar-excel {
+    margin: 50px;
+}
+
+/* --------------------------------------
+--CSS para las Tablas y sus componentes--
+-----------------------------------------*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 0;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+caption {
+    background-color: var(--caption-color) !important;
+    padding: 10px;
+    color: white;
+}
+
+thead tr:first-child {
+    background-color: var(--thead-bgcolor);
+    color: var(--thead-color);
+    font-family: 'Nunito-ExtraBold';
+    text-align: center;
+}
+
+th {
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: var(--table-primary);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--table-secondary);
+}
+
+tr:last-child {
+    border-bottom: 3px solid var(--table-secondary);
+}
+
+td {
+    font-size: 14px;
+}
+
+td input,
+td textarea {
+    width: 80%;
+    margin: 0 10px;
+}
+
+td select {
+    width: 100%;
+}
+
+td>input[type="number"] {
+    width: 4vw;
+}
+
+.centrar {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.mat-mdc-paginator-container {
+    width: fit-content !important;
+}
+
+.mat-mdc-paginator-outer-container {
+    justify-content: center;
+}
+
+mat-tooltip-component {
+    display: none;
+    /* Oculta el tooltip del paginator*/
+}
+
+input,
+textarea {
+    color: white;
+    border: none;
+    text-align: center;
+    border-bottom: 2px solid white;
+    /* width: 100%; */
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+
+
+/* ----------------------------------------
+-----------CSS para los Buscadores---------
+-----------------------------------------*/
+.buscador,
+.campos-gestor {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    height: 16px;
+}
+
+.select-buscador {
+    color: white;
+    background-color: #111827;
+    border: 0.5px solid rgb(75 85 99);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-family: 'Nunito-Medium';
+    height: 39px;
+}
+
+.seccion-pdvs,
+.seccion-pdvs-edit {
+    display: flex;
+}
+
+.seccion-pdvs-edit {
+    margin-top: 5px;
+}
+
+.select-buscador option:first-child {
+    background-color: rgb(75 85 99);
+}
+
+select option {
+    font-size: 12px;
+}
+
+.buscador input,
+.campos-gestor input {
+    color: white;
+    background-color: #374151;
+    border: 0.5px solid rgb(75 85 99);
+    padding: 10px;
+    border-radius: 7px;
+    width: 180px;
+    font-size: 14px;
+    font-family: 'Nunito-Medium';
+}
+
+input::placeholder {
+    color: #8fa3af;
+    font-style: italic;
+}
+
+.btn-buscar,
+.btn-resetear,
+.btn-crear,
+.btn-agregar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 7px;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    height: 39px;
+}
+
+.buscador .btn-buscar,
+.campos-gestor .btn-crear {
+    border: 1px solid rgb(29 78 216);
+    background-color: rgb(37 99 235);
+}
+
+.btn-agregar {
+    background-color: var(--checked-color);
+    border: none;
+}
+
+.btn-agregar:hover {
+    background-color: #009d00;
+}
+
+.letra-buscador {
+    padding: 0 5px 0 10px;
+}
+
+.btn-resetear {
+    margin-left: 8px;
+    background-color: #ff1d1d;
+    border: 1px solid #ff1d1d;
+}
+
+
+/* ----------------------------------------
+------------CSS para los Gestores----------
+-----------------------------------------*/
+
+.campos-gestor {
+    height: fit-content;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+.gestor-titulo {
+    color: rgb(239, 239, 239);
+    font-size: 40px;
+}
+
+.gestor-crear {
+    background-color: var(--main-color);
+    padding: 30px 30px 20px;
+    border-radius: 5px;
+    border: 1px solid white;
+    width: fit-content;
+}
+
+.gestor-crear h3 {
+    color: var(--letter-color);
+    margin: 0;
+}
+
+.gestor-crear input[type="checkbox"],
+.editando-label input[type="checkbox"] {
+    display: none;
+}
+
+.gestor-listado-seleccion {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.gestor-listado .estado,
+.gestor-seleccion .estado {
+    padding: 3px 10px;
+}
+
+.gestor-seleccion {
+    height: fit-content;
+    width: 320px;
+    position: relative;
+    margin-top: 50px;
+    padding: 30px;
+    padding-top: 20px;
+    background-color: var(--main-color);
+    border-radius: 5px;
+    border: 1px solid var(--color-detalles);
+}
+
+.gestor-seleccion h3 {
+    margin: 0;
+    color: var(--color-detalles);
+
+}
+
+.gestor-seleccion input[type="checkbox"] {
+    display: none;
+}
+
+.gestor-seleccion label {
+    cursor: pointer;
+}
+
+.estado-activo {
+    background-color: var(--checked-color);
+    color: white;
+    border-radius: 3px;
+}
+
+.estado-inactivo {
+    color: white;
+    background-color: red;
+    border-radius: 3px;
+}
+
+.btn-editar {
+    background-color: var(--color-detalles);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-actualizar-gestor,
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-actualizar-gestor button,
+.botones button {
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-actualizar-gestor button:first-child,
+.botones button:first-child {
+    background-color: #45A049;
+    color: white;
+}
+
+.btn-actualizar-gestor button:first-child:hover,
+.botones button:first-child:hover {
+    background-color: var(--checked-color);
+}
+
+.btn-actualizar-gestor button:last-child,
+.botones button:last-child {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-actualizar-gestor button:last-child:hover,
+.botones button:last-child:hover {
+    background-color: #d81e1e;
+}
+
+.lista-pdvs {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.item-lista-pdv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.lista-pdvs-edit .item-lista-pdv:nth-child(even) {
+    background-color: var(--table-primary);
+}
+
+.lista-pdvs-edit .item-lista-pdv:nth-child(odd) {
+    background-color: var(--table-secondary);
+}
+
+.item-lista-pdvs p {
+    margin: 0;
+}
+
+/*------- Botón borrar (estático) -------*/
+.deleteButton {
+    width: 40px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.deleteButton:hover {
+    overflow: visible;
+}
+
+.bin path {
+    transition: all 0.2s;
+}
+
+.deleteButton:hover .bin path {
+    fill: #ff1d1d;
+}
+
+.deleteButton:active {
+    transform: scale(0.98);
+}
+
+.tooltip {
+    --tooltip-color: rgb(41, 41, 41);
+    position: absolute;
+    top: -40px;
+    background-color: var(--tooltip-color);
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 8px 12px;
+    font-weight: 600;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.105);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.5s;
+    z-index: 3;
+}
+
+.tooltip::before {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    content: "";
+    background-color: var(--tooltip-color);
+    bottom: -10%;
+}
+
+.deleteButton:hover .tooltip {
+    opacity: 1;
+}
+
+/*----- Boton borrar entrada -----*/
+.btn-eliminar {
+    --btn-eliminar-width: 100px;
+    width: var(--btn-eliminar-width);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 16, 16);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+    padding: 8px 12px;
+    min-width: 90px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-eliminar,
+.btn-eliminar span {
+    transition: 200ms;
+}
+
+.btn-eliminar .text {
+    transform: translateX(-2px);
+    color: white;
+}
+
+.btn-eliminar .icon {
+    position: absolute;
+    /* border-left: 1px solid #c41b1b; */
+    transform: translateX(50px);
+    height: 17px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-eliminar svg {
+    width: 15px;
+    fill: #eee;
+}
+
+.btn-eliminar:hover {
+    background-color: #ff3636;
+}
+
+.btn-eliminar:hover .text {
+    color: transparent;
+}
+
+.btn-eliminar:hover .icon {
+    width: var(--btn-eliminar-width);
+    border-left: none;
+    transform: translateX(-10px);
+}
+
+.btn-eliminar:focus {
+    outline: none;
+}
+
+.btn-eliminar:active .icon svg {
+    transform: scale(0.8);
+}
+
+/*-------Botón actualizar---------*/
+.btn-actualizar {
+    position: relative;
+    width: 180px;
+    height: 40px;
+    margin-top: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--main-color);
+    box-shadow: 4px 4px var(--main-color);
+    background-color: rgb(244, 244, 244);
+    border-radius: 10px;
+    overflow: hidden;
+    padding-left: 0;
+}
+
+.btn-actualizar,
+.button__icon,
+.button__text {
+    transition: all 0.3s;
+}
+
+.btn-actualizar .button__text {
+    transform: translateX(20px);
+    color: #323232;
+    font-weight: 600;
+}
+
+.btn-actualizar .button__icon {
+    position: absolute;
+    transform: translateX(139px);
+    height: 100%;
+    width: 39px;
+    background-color: #dedede;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-actualizar .svg {
+    width: 20px;
+    fill: var(--main-color);
+}
+
+.btn-actualizar:hover {
+    background: var(--bg-color);
+}
+
+.btn-actualizar:hover .button__text {
+    color: transparent;
+}
+
+.btn-actualizar:hover .button__icon {
+    width: 178px;
+    transform: translateX(0);
+}
+
+.btn-actualizar:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px var(--main-color);
+}
+
+.btn-actualizar .button__icon:hover .svg {
+    animation: rotate 0.3s linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/*-------Botón importar Excel------*/
+.container-btn-file {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    background-color: #307750;
+    color: #fff;
+    border-style: none;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+    transition: all 250ms;
+}
+
+.container-btn-file input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.container-btn-file>img {
+    margin-right: 1em;
+}
+
+.container-btn-file::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0;
+    border-radius: 0.5em;
+    background-color: #469b61;
+    z-index: -1;
+    transition: all 350ms;
+}
+
+.container-btn-file:hover::before {
+    width: 100%;
+}
+
+/*------- Botón Añadir producto -------*/
+.btns-tabla {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.add-producto,
+.crear-producto {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.add-producto {
+    background-color: transparent;
+    color: var(--letter-color);
+    border: 1px dashed var(--letter-color);
+}
+
+.add-producto:hover {
+    background-color: rgba(61, 126, 255, 0.1);
+}
+
+.add-producto img {
+    width: 16px;
+    height: 16px;
+    filter: invert(46%) sepia(85%) saturate(2383%) hue-rotate(213deg) brightness(98%) contrast(97%);
+}
+
+.crear-producto {
+    background: linear-gradient(135deg, var(--caption-color), var(--color-excel));
+    color: var(--btn-color-w);
+    box-shadow: 0 4px 15px rgba(0, 114, 83, 0.3);
+}
+
+.crear-producto:hover {
+    background: linear-gradient(135deg, var(--caption-color), var(--color-excel-hover));
+    transform: translateY(-2px);
+}
+
+.crear-producto:disabled {
+    background: var(--btn-inactive);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

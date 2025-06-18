@@ -1,0 +1,20 @@
+<div id="center">
+    <div class="contenedor-gestor">
+        <div class="centrar">
+            <h2 class="gestor-titulo">GESTIÓN DE UBICACIONES</h2>
+        </div>
+
+        <div class="centrar">
+            <div class="gestor-crear">
+                <h3>Crear NUEVA ubicación</h3>
+                <div class="buscador campos-gestor">
+                    <input [(ngModel)]="nuevaUbicacion.nombre" placeholder="Nombre" type="text">
+                    <button (click)="crearUbicacion()" class="btn-crear" [disabled]="nuevaUbicacion.nombre == '' || nuevaUbicacion.nombre == undefined">CREAR</button>
+                </div>
+            </div>
+        </div>
+
+        <app-lista-ubicaciones class="gestor-listado-seleccion" [ubicacionCreada]="ubicacionCreada"></app-lista-ubicaciones>
+
+    </div>
+</div>

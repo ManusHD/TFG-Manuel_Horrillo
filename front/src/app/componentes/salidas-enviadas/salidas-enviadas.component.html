@@ -1,0 +1,69 @@
+<app-cabecera-salidas></app-cabecera-salidas>
+
+<div class="contenedor-salidas-enviadas">
+    <div>
+        <div class="contenedor-filtro">
+            <div class="buscador-fechas">
+                <div class="rango-fechas">
+                    <div class="rango-fecha">
+                        <label>Desde:</label>
+                        <input type="date" [(ngModel)]="fechaInicio" class="input-fecha" [max]="fechaFin" />
+                    </div>
+
+                    <div class="rango-fecha">
+                        <label>Hasta:</label>
+                        <input type="date" [(ngModel)]="fechaFin" class="input-fecha" [min]="fechaInicio" />
+                    </div>
+                </div>
+
+                <div class="buscador" (keyup)="onEnterKey($event)">
+                    <select [(ngModel)]="tipoBusqueda" class="select-buscador">
+                        <option value="referencia">Búsqueda por REFERENCIA</option>
+                        <option value="descripcion">Búsqueda por DESCRIPCIÓN</option>
+                        <option value="observacion">Búsqueda por OBSERVACIÓN</option>
+                        <option value="destino">Búsqueda por DESTINOS</option>
+                    </select>
+                    <input type="text" placeholder="Buscar entrada" [(ngModel)]="buscador" />
+                    <button (click)="buscarSalidas()" class="btn-buscar">
+                        <img src="../../../assets/icons/lupa-blanca.svg" alt="">
+                        <span class="letra-buscador">Buscar</span>
+                    </button>
+                    <button (click)="resetearBuscador()" class="btn-resetear">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="historial">
+            <table [className]="'tabla-paginator'" mat-table [dataSource]="dataSource">
+                <caption>SALIDAS ENVIADAS</caption>
+                <ng-container matColumnDef="fechaEnvio">
+                    <th class="header-paginator" *matHeaderCellDef>FECHA ENVÍO</th>
+                    <td class="fila-paginator" mat-cell *matCellDef="let salida">{{salida.fechaEnvio | date: 'dd/MM/yyyy'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="destino">
+                    <th class="header-paginator" *matHeaderCellDef>DESTINO</th>
+                    <td class="fila-paginator" mat-cell *matCellDef="let salida">{{salida.destino || salida.colaborador || salida.pdv}}</td>
+                </ng-container>
+                <ng-container matColumnDef="detalles">
+                    <th class="header-paginator" *matHeaderCellDef>DETALLES</th>
+                    <td class="fila-paginator" mat-cell *matCellDef="let salida"><app-detalles-salidas [enRecibidas]="true" [salida]="salida" (entradaRellena)="salida.rellena=$event"></app-detalles-salidas></td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="columnasPaginator"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasPaginator;"></tr>
+            </table>
+            <mat-paginator
+                class="paginator"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                [length]="totalElementos"
+                [hidePageSize]="true"
+                showFirstLastButtons
+                (page)="cambiarPagina($event)">
+            </mat-paginator>
+            <app-exportar-excel (click)="obtenerDatosAExportar()" [data$]="salidasParaExportar$" [nombreConjuntoExportado]="'SALIDAS'" [fileName]="'SALIDAS-EXPORTADAS'" ></app-exportar-excel>
+        </div>
+    </div>
+</div>
+
+<app-pantalla-carga></app-pantalla-carga>

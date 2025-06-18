@@ -1,0 +1,47 @@
+<button *ngIf="currentPath == '/entradas/recibidas'; else editar" class="btn-productos" (click)="mostrarDetalles()">VER PRODUCTOS</button>
+<ng-template #editar>
+    <button class="btn-productos" (click)="mostrarDetalles()">EDITAR</button>
+</ng-template>
+
+<div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+        <span *ngIf="!enRecibidas" [appConfirm]="'VAS A SALIR SIN GUARDAR LOS CAMBIOS ¿ESTÁS SEGURO?'" (confirmed)="cerrarModal()" class="close">&times;</span>
+        <span *ngIf="enRecibidas" (click)="cerrarModal()" class="close">&times;</span>
+        <h2 *ngIf="enRecibidas" >ORIGEN: <span class="titulo-modal">
+            {{entrada.origen || entrada.colaborador || entrada.pdv || entrada.dcs}} 
+        </span></h2>
+        <div class="flotar-medio">
+            <table *ngIf="enRecibidas; else detallesEnPrevision">
+                <thead>
+                    <tr>
+                        <th>REFERENCIA</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th>UNIDADES</th>
+                        <th>UBICACIÓN</th>
+                        <th>PALETS</th>
+                        <th>BULTOS</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of entrada.productos">
+                        <td>{{producto.ref}} </td>
+                        <td>{{producto.description}} </td>
+                        <td>{{producto.unidades}} </td>
+                        <td>{{producto.ubicacion}} </td>
+                        <td>{{producto.palets}} </td>
+                        <td>{{producto.bultos}} </td>
+                        <td>{{producto.observaciones}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ng-template #detallesEnPrevision>
+            <app-formulario-entrada-salida [pestanaPadre]="'detallePrevisionEntrada'" [detallesES]="entrada">
+            </app-formulario-entrada-salida>
+        </ng-template>
+    </div>
+</div>
+
+<app-pantalla-carga></app-pantalla-carga>

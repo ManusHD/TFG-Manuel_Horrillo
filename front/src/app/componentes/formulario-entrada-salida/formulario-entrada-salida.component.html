@@ -1,0 +1,335 @@
+<div *ngIf="mostrarFormulario" class="flotar-medio" style="height: 1000px;">
+    <div class="cuerpo-formulario">
+        <form [formGroup]="entradaSalidaForm" (keydown)="onEnterKey($event)" #formularioNuevaEntradaSalida="ngForm">
+
+            <div class="formulario-no-repetido">
+                <div class="fechas">
+                    <div class="campo-form" *ngIf="!pestanaPadre.startsWith('prevision')">
+                        <label *ngIf="currentPath.startsWith('/entradas')">FECHA RECEPCIÓN</label>
+                        <label *ngIf="currentPath.startsWith('/salidas') && !currentPath.includes('/pendientes')">FECHA
+                            ENVÍO</label>
+                        <input
+                            *ngIf="(currentPath.startsWith('/entradas') || (currentPath.startsWith('/salidas') && !currentPath.includes('/pendientes')))"
+                            formControlName="fechaRecepcionEnvio" type="date"
+                            [ngClass]="{'campo-vacio': campoSimpleVacio('fechaRecepcionEnvio')}" />
+
+                    </div>
+                </div>
+
+                <div class="direcciones">
+                    <div class="campo-form">
+                        <label>PERFUMERÍA</label>
+                        <input (focus)="setActiveCampoUnico('perfumeria')" (blur)="clearActiveCampoUnico()" formControlName="perfumeria" type="text"
+                            [ngClass]="{'campo-vacio': !perfumeriaValido() && !previsionEsValidaCampoSimple()}" />
+                        <div class="autocomplete-container">
+                            <div class="autocomplete-dropdown"
+                                *ngIf="perfumerias.length > 0 && !perfumeriaSeleccionada && activeCampoUnico == 'perfumeria'">
+                                <div class="autocomplete-item" *ngFor="let perfumeria of perfumerias"
+                                    (click)="selectPerfumeria(perfumeria)">
+                                    {{ perfumeria.nombre }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="campo-form">
+                        <label>PDV</label>
+                        <select formControlName="pdv"
+                            [ngClass]="{'campo-vacio': !pdvValido() && !previsionEsValidaCampoSimple()}">
+                            <option value=""></option>
+                            <option *ngFor="let pdv of pdvs" [value]="pdv.nombre">{{pdv.nombre}}</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-form">
+                        <label>COLABORADOR</label>
+                        <select formControlName="colaborador"
+                            [ngClass]="{'campo-vacio': !colaboradorValido() && !previsionEsValidaCampoSimple()}">
+                            <option value=""></option>
+                            <option *ngFor="let colaborador of colaboradores" [value]="colaborador.nombre">
+                                {{colaborador.nombre}}</option>
+                        </select>
+                    </div>
+
+                    <!-- Campos específicos de origen/destino -->
+                    <div class="campo-form">
+                        <label *ngIf="currentPath.startsWith('/salidas')">OTROS DESTINOS</label>
+                        <label *ngIf="currentPath.startsWith('/entradas')">OTROS ORIGENES</label>
+                        <div class="autocomplete-container">
+                            <input (focus)="setActiveCampoUnico('otroOrigenDestino')" (blur)="clearActiveCampoUnico()" formControlName="otroOrigenDestino" type="text"
+                                [ngClass]="{'campo-vacio': !otroOrigenDestinoValido() && !previsionEsValidaCampoSimple()}" />
+                            <div class="autocomplete-dropdown"
+                                *ngIf="otrasDirecciones.length > 0 && !otraDireccionSeleccionada && activeCampoUnico == 'otroOrigenDestino'">
+                                <div class="autocomplete-item" *ngFor="let direccion of otrasDirecciones"
+                                    (click)="selectOtraDireccion(direccion)">
+                                    {{ direccion.nombre }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos de dirección para salidas -->
+                <ng-container *ngIf="currentPath.startsWith('/salidas')">
+                    <div class="detalles-direcciones">
+
+                        <div class="campo-form ">
+                            <label>DIRECCIÓN</label>
+                            <input formControlName="direccion" type="text" />
+                        </div>
+
+                        <div class="campo-form ">
+                            <label>POBLACIÓN</label>
+                            <input formControlName="poblacion" type="text" />
+                        </div>
+
+                        <div class="campo-form ">
+                            <label>PROVINCIA</label>
+                            <input formControlName="provincia" type="text" />
+                        </div>
+
+                        <div class="campo-form ">
+                            <label>CP</label>
+                            <input formControlName="cp" type="text" />
+                        </div>
+
+                        <div class="campo-form ">
+                            <label>TELÉFONO</label>
+                            <input formControlName="telefono" type="text" />
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Campo DCS para entradas -->
+                <div class="dcs">
+                    <div class="campo-form " *ngIf="currentPath.startsWith('/entradas')">
+                        <label>DCS</label>
+                        <input formControlName="dcs"
+                            [ngClass]="{'campo-vacio': !dcsValido() && !previsionEsValidaCampoSimple()}" type="text"
+                            maxlength="10" />
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tabla para campos repetitivos -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>REFERENCIA</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th *ngIf="!pestanaPadre.startsWith('prevision')">PALETS</th>
+                        <th *ngIf="!pestanaPadre.startsWith('prevision')">BULTOS</th>
+                        <th *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('nuevaSalida')">
+                            UNIDADES PEDIDAS
+                        </th>
+                        <th *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('prevision')">UNIDADES
+                            ENVIADAS</th>
+                        <th *ngIf="currentPath.startsWith('/entradas')">UNIDADES</th>
+                        <th *ngIf="!pestanaPadre.startsWith('prevision')">UBICACIÓN</th>
+                        <th *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('prevision')">AGENCIA
+                        </th>
+                        <th>OBSERVACIONES</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="productos">
+                    <tr *ngFor="let producto of productosControls.controls; let i = index" [formGroupName]="i"
+                        [ngClass]="{'campo-nuevo': isProductoNuevo(i)}">
+                        <td>
+                            <input formControlName="ref" (keyup)="buscarProductoPorReferencia(i)" type="text"
+                                maxlength="14" [ngClass]="{'campo-vacio': !refValidaIndex(i)}" />
+                        </td>
+                        <td>
+                            <div class="centrar">
+
+                                <textarea formControlName="description" (keyup)="buscarProductoEspecial(i)"
+                                    (focus)="setActiveRow(i)" (blur)="clearActiveRow()" type="text"
+                                    [ngClass]="{'campo-vacio': !descriptionValida(i)}"
+                                    [readOnly]="!isProductoNuevo(i) && !esProductoEspecial(productosControls.at(i).get('ref')!.value)"
+                                    class="description"></textarea>
+
+                                <!-- Dropdown para VISUAL -->
+                                <div *ngIf="productosControls.at(i).get('ref')!.value === 'VISUAL' 
+                            && visuales.length > 0 
+                            && activeRowIndex === i" class="autocomplete-container">
+                                    <div class="autocomplete-dropdown">
+                                        <div class="autocomplete-item" *ngFor="let visual of visuales"
+                                            (click)="selectVisual(i, visual)">
+                                            {{ visual.description }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dropdown para SIN REFERENCIA -->
+                                <div *ngIf="productosControls.at(i).get('ref')!.value === 'SIN REFERENCIA' 
+                                        && productosSR.length > 0 
+                                        && activeRowIndex === i" class="autocomplete-container">
+                                    <div class="autocomplete-dropdown">
+                                        <div class="autocomplete-item" *ngFor="let sinReferencia of productosSR"
+                                            (click)="selectProductosSR(i, sinReferencia)">
+                                            {{ sinReferencia.description }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td *ngIf="!pestanaPadre.startsWith('prevision')">
+                            <input formControlName="palets" type="number"
+                                [ngClass]="{'campo-vacio': campoVacio('palets', i)}" min="0" />
+                        </td>
+                        <td *ngIf="!pestanaPadre.startsWith('prevision')">
+                            <input formControlName="bultos" type="number"
+                                [ngClass]="{'campo-vacio': campoVacio('bultos', i)}" min="0" />
+                        </td>
+                        <td *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('nuevaSalida')">
+                            <div class="centrar">
+                                <input formControlName="unidadesPedidas" type="number"
+                                    [ngClass]="{'campo-vacio': campoVacio('unidadesPedidas', i)}" min="0" />
+                            </div>
+                        </td>
+                        <td
+                            *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('prevision') || currentPath.startsWith('/entradas')">
+                            <div class="centrar">
+                                <input formControlName="unidades" type="number"
+                                    [ngClass]="{'campo-vacio': campoVacio('unidades', i)}" min="0" />
+                            </div>
+                        </td>
+                        <td *ngIf="!pestanaPadre.startsWith('prevision')">
+                            <select formControlName="ubicacion" (change)="sincronizarUbicaciones(i)"
+                                [ngClass]="{'campo-vacio': campoVacio('ubicacion', i)}">
+                                <option value=""></option>
+                                <ng-container *ngIf="esEntrada(); else ubiSalida">
+                                    <option *ngFor="let ubicacion of ubicaciones; let i = index" [value]="ubicacion">
+                                        {{ubicacion}}
+                                    </option>
+                                </ng-container>
+                                <ng-template #ubiSalida>
+                                    <ng-container
+                                        *ngIf="productosControls.at(i).get('ref')?.value !== 'VISUAL' && productosControls.at(i).get('ref')?.value !== 'SIN REFERENCIA'; else ubisEspeciales">
+                                        <option
+                                            *ngFor="let ubicacion of ubicacionesPorProducto[productosControls.at(i).get('ref')?.value]"
+                                            [value]="ubicacion.nombre">
+                                            {{ubicacion.nombre}}
+                                        </option>
+                                    </ng-container>
+                                    <ng-template #ubisEspeciales>
+                                        <option
+                                            *ngFor="let ubicacion of ubicacionesPorProducto[productosControls.at(i).get('description')?.value]"
+                                            [value]="ubicacion.nombre">
+                                            {{ubicacion.nombre}}
+                                        </option>
+                                    </ng-template>
+                                </ng-template>
+                            </select>
+                        </td>
+                        <td *ngIf="currentPath.startsWith('/salidas') && !pestanaPadre.startsWith('prevision')">
+                            <select formControlName="formaEnvio"
+                                [ngClass]="{'campo-vacio': campoVacio('formaEnvio', i)}"
+                                (change)="sincronizarFormasEnvio(i)">
+                                <option value=""></option>
+                                <option *ngFor="let agencia of agenciasTransporte" [value]="agencia.nombre">
+                                    {{agencia.nombre}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea formControlName="observaciones" id="observaciones"></textarea>
+                        </td>
+
+                        <td>
+                            <div class="centrar">
+                                <label *ngIf="currentPath != '/salidas' && currentPath != '/entradas'"
+                                    class="checkbox-comprobado">
+                                    <input formControlName="comprobado" type="checkbox" />
+                                    <svg viewBox="0 0 44 44" class="sizer checkmark">
+                                        <path
+                                            d="M14,24 L21,31 L39.7428882,11.5937758 C35.2809627,6.53125861 30.0333333,4 24,4 C12.95,4 4,12.95 4,24 C4,35.05 12.95,44 24,44 C35.05,44 44,35.05 44,24 C44,19.3 42.5809627,15.1645919 39.7428882,11.5937758"
+                                            transform="translate(-2.000000, -2.000000)"></path>
+                                    </svg>
+                                </label>
+                                <button type="button" (click)="eliminarProducto(i)" class="deleteButton">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 59" class="bin">
+                                        <path fill="#B5BAC1"
+                                            d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z">
+                                        </path>
+                                        <path fill="#B5BAC1"
+                                            d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z">
+                                        </path>
+                                        <path fill="#B5BAC1"
+                                            d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z"
+                                            clip-rule="evenodd" fill-rule="evenodd"></path>
+                                        <path fill="#B5BAC1" d="M2 13H48L47.6742 21.28H2.32031L2 13Z"></path>
+                                    </svg>
+                                    <span class="tooltip">Eliminar</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="btns-tabla">
+                <button
+                    *ngIf="pestanaPadre == 'nuevaEntrada' || 'detallePrevisionEntrada' || pestanaPadre == 'nuevaSalida' || 'detallePrevisionSalida'"
+                    type="button" (click)="agregarProducto()" class="add-producto">
+                    <img src="../../../assets/icons/signo-mas.svg" alt="">
+                    <span>AÑADIR LÍNEA</span>
+                </button>
+
+                <button [appConfirm]="'¿ESTÁS SEGURO DE GRABAR LA ENTRADA?'" (confirmed)="onSubmit()"
+                    *ngIf="pestanaPadre == 'nuevaEntrada'" type="submit" class="crear-producto"
+                    [disabled]="!btnSubmitActivado">
+                    GRABAR ENTRADA
+                </button>
+
+                <button [appConfirm]="'¿ESTÁS SEGURO DE GRABAR LA SALIDA?'" (confirmed)="onSubmit()"
+                    *ngIf="pestanaPadre == 'nuevaSalida'" type="submit" class="crear-producto"
+                    [disabled]="!btnSubmitActivado">
+                    GRABAR SALIDA
+                </button>
+
+                <button [appConfirm]="'¿ESTÁS SEGURO DE GRABAR LA PREVISIÓN?'" (confirmed)="onSubmit()"
+                    *ngIf="pestanaPadre == 'previsionEntrada'" type="submit" class="crear-producto"
+                    [disabled]="!pendiente || !btnSubmitActivado">
+                    GRABAR PREVISIÓN
+                </button>
+
+                <button [appConfirm]="'¿ESTÁS SEGURO DE GRABAR EL TRABAJO?'" (confirmed)="onSubmit()"
+                    *ngIf="pestanaPadre == 'previsionSalida'" type="submit" class="crear-producto"
+                    [disabled]="!pendiente || !btnSubmitActivado">
+                    GRABAR TRABAJO
+                </button>
+            </div>
+        </form>
+
+        <div class="">
+            <button [appConfirm]="'¿ESTÁS SEGURO DE GUARDAR LOS CAMBIOS?'" (confirmed)="modificarEntrada()"
+                *ngIf="pestanaPadre == 'detallePrevisionEntrada'" class="btn-actualizar">
+                <span class="button__text">Guardar cambios</span>
+                <span class="button__icon"><svg class="svg" height="48" viewBox="0 0 48 48" width="48"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z">
+                        </path>
+                        <path d="M0 0h48v48h-48z" fill="none"></path>
+                    </svg></span>
+            </button>
+
+            <button [appConfirm]="'¿ESTÁS SEGURO DE GUARDAR LOS CAMBIOS?'" (confirmed)="modificarSalida()"
+                *ngIf="pestanaPadre == 'detallePrevisionSalida'" class="btn-actualizar">
+                <span class="button__text">Guardar cambios</span>
+                <span class="button__icon"><svg class="svg" height="48" viewBox="0 0 48 48" width="48"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z">
+                        </path>
+                        <path d="M0 0h48v48h-48z" fill="none"></path>
+                    </svg></span>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<app-pantalla-carga></app-pantalla-carga>

@@ -1,0 +1,33 @@
+<button class="btn-productos" (click)="mostrarDetalles()">VER PRODUCTOS</button>
+
+<div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+        <span class="close" (click)="cerrarModal()">&times;</span>
+        <h2>Productos: <span class="titulo-modal">{{ubicacion.nombre}}</span></h2>
+        <div class="flotar-medio columna">
+            <table>
+                <thead>
+                    <tr>
+                        <th>REFERENCIA</th>
+                        <th>DESCRIPCION</th>
+                        <th>UNIDADES</th>
+                        <th>REUBICAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of ubicacion.productos">
+                        <td>{{producto.ref}} </td>
+                        <td>{{producto.description}} </td>
+                        <td>{{producto.unidades}} </td>
+                        <td class="centrar transparente">
+                            <app-reubicar-producto [productoActual]="producto" [ubicacionActual]="ubicacion.nombre!"></app-reubicar-producto>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button *ngIf="ubicacion.productos!.length > 0" class="ubicacion-button" [appConfirm]="'¿QUIERES CREAR UNA PREVISIÓN DE SALIDA CON ESTA UBICACION?'" (confirmed)="sacarUbicacion()">
+            <span class="button-text">DAR SALIDA A LA UBICACIÓN</span>
+        </button>
+    </div>
+</div>

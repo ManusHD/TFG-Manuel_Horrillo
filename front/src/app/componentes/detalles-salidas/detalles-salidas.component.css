@@ -1,0 +1,86 @@
+
+h2 {
+    margin: 0;
+    font-family: 'Nunito-ExtraBold';
+    color: #b6b6b6;
+}
+
+.nombre-destino {
+    color: white;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    cursor: pointer;
+}
+
+.flotar-medio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    color: white;
+    margin-top: 50px;
+    text-align: center;
+}
+
+th {
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: var(--table-primary);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--table-secondary);
+}
+
+thead tr:first-child {
+    background-color: #B4C2E1;
+    color: black;
+    font-family: 'Nunito-ExtraBold';
+}
+
+tr:last-child {
+    border-bottom: 3px solid var(--table-secondary);
+}
+
+tbody button {
+    cursor: pointer;
+    border: none;
+    height: 24px;
+}
+
+.transparente {
+    background-color: transparent;
+}
+
+input {
+    color: white;
+    border: none;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px solid white;
+}
+
+input:focus {
+    outline: none;
+}
