@@ -330,7 +330,7 @@ Para otros usos comerciales, contactar al autor.
 **Manuel Horrillo**
 - GitHub: [@ManusHD](https://github.com/ManusHD)
 - Proyecto: Trabajo de Fin de Grado
-- Universidad: [Tu Universidad]
+- Universidad: Escuela Politécnica de Cáceres
 - Año: 2025
 
 ---
