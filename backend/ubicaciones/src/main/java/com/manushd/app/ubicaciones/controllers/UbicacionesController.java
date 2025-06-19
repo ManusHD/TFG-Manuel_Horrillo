@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2025 Manuel Horrillo
+ * 
+ * Sistema de Gestión Logística para Delim - TFG
+ * Licencia Propietaria - Todos los derechos reservados
+ * 
+ * @author Manuel Horrillo
+ */
+
 package com.manushd.app.ubicaciones.controllers;
 
 import java.util.HashSet;

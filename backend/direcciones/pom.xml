@@ -13,18 +13,32 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>direcciones</name>
 	<description>Almacena y maneja todas las direcciones de los colaboradores y PDV relacionados con la empresa</description>
-	<url/>
+	<url>https://github.com/ManusHD/TFG-Manuel_Horrillo</url>
 	<licenses>
-		<license/>
+		<license>
+			<name>Proprietary License</name>
+			<url>https://github.com/ManusHD/TFG-Manuel_Horrillo/blob/main/LICENSE</url>
+			<distribution>repo</distribution>
+			<comments>Todos los derechos reservados - Uso comercial restringido</comments>
+		</license>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<id>mhorrillo</id>
+			<name>Manuel Horrillo</name>
+			<email>mhorrillj@alumnos.unex.es</email>
+			<organization>Escuela Politécnica de Cáceres</organization>
+			<roles>
+				<role>developer</role>
+				<role>architect</role>
+			</roles>
+			<timezone>Europe/Madrid</timezone>
+		</developer>
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection>scm:git:git://github.com/ManusHD/TFG-Manuel_Horrillo.git</connection>
+		<developerConnection>scm:git:ssh://github.com:ManusHD/TFG-Manuel_Horrillo.git</developerConnection>
+		<url>https://github.com/ManusHD/TFG-Manuel_Horrillo/tree/main</url>
 	</scm>
 	<properties>
 		<java.version>17</java.version>

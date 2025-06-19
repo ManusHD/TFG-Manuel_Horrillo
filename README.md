@@ -299,7 +299,31 @@ sudo systemctl status mysql
 
 ## 📄 Licencia
 
-Este proyecto ha sido desarrollado como Trabajo de Fin de Grado para Delim. Todos los derechos reservados.
+Este proyecto está bajo **Licencia Propietaria**. Ver el archivo [LICENSE](LICENSE) para términos completos.
+
+### 🔒 Derechos de Autor
+- **Autor**: Manuel Horrillo
+- **Año**: 2025
+- **Tipo**: Trabajo de Fin de Grado
+- **Cliente**: Delim S.L.
+
+### 📚 Uso Académico
+Para uso académico, educativo o de investigación, es necesario:
+1. Contactar al autor previamente
+2. Incluir atribución completa
+3. Respetar las limitaciones establecidas
+
+### 💼 Uso Comercial
+El uso comercial está restringido exclusivamente a Delim S.L. 
+Para otros usos comerciales, contactar al autor.
+
+### 📧 Contacto para Permisos
+- **Email**: [mhorrillj@alumnos.unex.es]
+- **GitHub**: [@ManusHD](https://github.com/ManusHD)
+- **Proyecto**: [Sistema de Gestión Logística](https://github.com/ManusHD/TFG-Manuel_Horrillo)
+
+---
+**⚖️ Todos los derechos reservados - 2025**
 
 ## 👨‍💻 Autor
 

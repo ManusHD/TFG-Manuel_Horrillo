@@ -1,6 +1,25 @@
 {
   "name": "app-gestion",
   "version": "0.0.0",
+  "description": "Sistema de Gestión Logística para Delim - Frontend",
+  "author": {
+    "name": "Manuel Horrillo",
+    "email": "mhorrillj@alumnos.unex.es",
+    "url": "https://github.com/ManusHD"
+  },
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/ManusHD/TFG-Manuel_Horrillo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ManusHD/TFG-Manuel_Horrillo.git"
+  },
+  "keywords": [
+    "logistics",
+    "inventory",
+    "angular",
+    "tfg",
+    "delim"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
